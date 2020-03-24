@@ -27,8 +27,29 @@ body {
 } */
 
 #navigation {
-  display: inline-block;
+  height: 100px;
+  width: 100px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
+#up {
+  grid-column: 2/3;
+  grid-row: 1;
+}
+#down {
+  grid-column: 2/3;
+  grid-row: 3;
+}
+#right {
+  grid-column: 3;
+  grid-row: 2;
+}
+#left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
 #installButton {
   color: white;
   background: blue;

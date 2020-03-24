@@ -1,0 +1,24 @@
+{
+  "name": "Simple Map",
+  "short_name": "SimpleMap",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#F0F7D6",
+  "theme_color": "#3367D6",
+  "orientation": "portrait-primary",
+  "description": "Map App with Google Map API",
+  "icons": [
+    {
+      "src": "./map192-icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./map512-icon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+
+  "scope": "/"
+}

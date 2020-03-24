@@ -28,7 +28,8 @@ function initMap() {
     center: t_centralen,
     zoom: 19,
     mapTypeId: "satellite", // (ROADMAP, SATELLITE, HYBRID, or TERRAIN)
-    rotateControl: true
+    rotateControl: true,
+    disableDefaultUI: true
   });
   markerKTH = new google.maps.Marker({
     map: map,
