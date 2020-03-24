@@ -3,8 +3,8 @@
   "short_name": "SimpleMap",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#F0F7D6",
-  "theme_color": "#3367D6",
+  "background_color": "#DEB887",
+  "theme_color": "#DEB887",
   "orientation": "portrait-primary",
   "description": "Map App with Google Map API",
   "icons": [

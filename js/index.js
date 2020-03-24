@@ -1,7 +1,5 @@
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/sw.js").then(function() {
-    console.log("Service Worker Registered");
-  });
+function setMap(type) {
+  map.setMapTypeId(type);
 }
 
 function pan(x, y, k) {
@@ -12,9 +10,15 @@ function zoom(x) {
   map.setZoom(map.getZoom() + x);
 }
 
-function tiltMap(tilt) {
-  map.setTilt(tilt);
+function tiltMap() {
+  // map.setTilt(tilt);
+  if (map.getTilt() == 0) {
+    map.setTilt(90);
+  } else {
+    map.setTilt(0);
+  }
 }
+
 //_____________MAP______________
 var map;
 var markerTC;
@@ -27,9 +31,91 @@ function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: t_centralen,
     zoom: 19,
-    mapTypeId: "satellite", // (ROADMAP, SATELLITE, HYBRID, or TERRAIN)
-    rotateControl: true,
-    disableDefaultUI: true
+    mapTypeId: "hybrid", // (ROADMAP, SATELLITE, HYBRID, or TERRAIN)
+    rotateControl: false,
+    fullscreenControl: false,
+
+    disableDefaultUI: true,
+    styles: [
+      { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+      { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+      { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+      {
+        featureType: "administrative.locality",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#d59563" }]
+      },
+      {
+        featureType: "poi",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#d59563" }]
+      },
+      {
+        featureType: "poi.park",
+        elementType: "geometry",
+        stylers: [{ color: "#263c3f" }]
+      },
+      {
+        featureType: "poi.park",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#6b9a76" }]
+      },
+      {
+        featureType: "road",
+        elementType: "geometry",
+        stylers: [{ color: "#38414e" }]
+      },
+      {
+        featureType: "road",
+        elementType: "geometry.stroke",
+        stylers: [{ color: "#212a37" }]
+      },
+      {
+        featureType: "road",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#9ca5b3" }]
+      },
+      {
+        featureType: "road.highway",
+        elementType: "geometry",
+        stylers: [{ color: "#746855" }]
+      },
+      {
+        featureType: "road.highway",
+        elementType: "geometry.stroke",
+        stylers: [{ color: "#1f2835" }]
+      },
+      {
+        featureType: "road.highway",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#f3d19c" }]
+      },
+      {
+        featureType: "transit",
+        elementType: "geometry",
+        stylers: [{ color: "#2f3948" }]
+      },
+      {
+        featureType: "transit.station",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#d59563" }]
+      },
+      {
+        featureType: "water",
+        elementType: "geometry",
+        stylers: [{ color: "#17263c" }]
+      },
+      {
+        featureType: "water",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#515c6d" }]
+      },
+      {
+        featureType: "water",
+        elementType: "labels.text.stroke",
+        stylers: [{ color: "#17263c" }]
+      }
+    ]
   });
   markerKTH = new google.maps.Marker({
     map: map,
@@ -73,54 +159,4 @@ function toggleFullScreen() {
   } else {
     cancelFullScreen.call(doc);
   }
-}
-
-self.addEventListener("install", function(event) {
-  var CACHE_NAME = "my-site-cache-v1";
-  var urlsToCache = ["/", "/index.css", "/index.js"];
-
-  self.addEventListener("install", function(event) {
-    // Perform install steps
-    event.waitUntil(
-      caches.open(CACHE_NAME).then(function(cache) {
-        console.log("Opened cache");
-        return cache.addAll(urlsToCache);
-      })
-    );
-  });
-});
-
-var deferredPrompt;
-
-window.addEventListener("beforeinstallprompt", function(e) {
-  console.log("platforms", e.platforms);
-  e.preventDefault();
-  deferredPrompt = e;
-  showAddToHomeScreen();
-});
-
-function showAddToHomeScreen() {
-  var a2hsBtn = document.querySelector(".ad2hs-prompt");
-  a2hsBtn.style.display = "block";
-  a2hsBtn.addEventListener("click", addToHomeScreen);
-}
-
-function addToHomeScreen() {
-  var a2hsBtn = document.querySelector(".ad2hs-prompt");
-
-  // hide our user interface that shows our A2HS button
-  a2hsBtn.style.display = "none";
-
-  // Show the prompt
-  deferredPrompt.prompt();
-
-  // Wait for the user to respond to the prompt
-  deferredPrompt.userChoice.then(function(choiceResult) {
-    if (choiceResult.outcome === "accepted") {
-      console.log("User accepted the A2HS prompt");
-    } else {
-      console.log("User dismissed the A2HS prompt");
-    }
-    deferredPrompt = null;
-  });
 }

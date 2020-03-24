@@ -11,27 +11,35 @@ body {
   padding: 0;
   -webkit-overflow-scrolling: touch;
 }
-
-/* #floating-panel {
+#maptypes {
+  display: inline-block;
+}
+#fullscreen {
   position: absolute;
-  top: 10px;
-  left: 25%;
+  right: 0;
+}
+
+#controls {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  /* bottom: 0; */
+
   z-index: 5;
-  background-color: #fff;
   padding: 5px;
-  border: 1px solid #999;
+  /* border: 1px solid #999; */
   text-align: center;
   font-family: "Roboto", "sans-serif";
   line-height: 30px;
   padding-left: 10px;
-} */
+}
 
 #navigation {
-  height: 100px;
-  width: 100px;
+  height: 150px;
+  width: 150px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 50px);
+  grid-template-rows: repeat(3, 50px);
 }
 #up {
   grid-column: 2/3;
@@ -46,7 +54,7 @@ body {
   grid-row: 2;
 }
 #left {
-  grid-column: 1;
+  grid-column: 0/1;
   grid-row: 2;
 }
 
