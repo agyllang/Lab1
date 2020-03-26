@@ -19,13 +19,59 @@ function tiltMap() {
   }
 }
 
-//_____________MAP______________
-var map;
-var markerTC;
-var markerKTH;
+function toEdoLocation() {
+  map.setCenter(edo_location);
+}
 
-var kth_location = { lat: 59.3498092, lng: 18.0684758 };
+function toKTHLocation() {
+  map.setCenter(kth_location);
+}
+
+function toLandetLocation() {
+  map.setCenter(landet_location);
+}
+
+function hereLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        infoWindow.setPosition(pos);
+        infoWindow.setContent("Location found.");
+        infoWindow.open(map);
+        map.setCenter(pos);
+      },
+      function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+      }
+    );
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(
+    browserHasGeolocation
+      ? "Error: The Geolocation service failed."
+      : "Error: Your browser doesn't support geolocation."
+  );
+  infoWindow.open(map);
+}
+
+//_____________MAP______________
+var map, markerTC, landetmarker, markerKTH, markerEdo, markerlandet, infoWindow;
+
+var kth_location = { lat: 59.347008, lng: 18.072181 };
 var t_centralen = { lat: 59.32915362, lng: 18.058666432 };
+var landet_location = { lat: 59.35715, lng: 17.735068 };
+var edo_location = { lat: 59.473943, lng: 18.666469 };
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
@@ -132,6 +178,26 @@ function initMap() {
     animation: google.maps.Animation.BOUNCE,
     position: t_centralen
   });
+
+  var markerEdo = new google.maps.Marker({
+    map: map,
+    title: "Landställe Edö Ö",
+    draggable: false,
+    animation: google.maps.Animation.BOUNCE,
+    position: edo_location
+  });
+
+  var markerLandet = new google.maps.Marker({
+    map: map,
+    title: "Landställe Ekerö",
+    draggable: false,
+    animation: google.maps.Animation.BOUNCE,
+    position: landet_location
+  });
+
+  infoWindow = new google.maps.InfoWindow();
+
+  // Try HTML5 geolocation.
 }
 
 function toggleFullScreen() {
